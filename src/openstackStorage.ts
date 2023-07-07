@@ -82,47 +82,43 @@ export class OpenStackStorage {
     };
   }
 
-  public async uploadFile(container: string, filePath: string, fileName: string, extraHeaders?: Record<string, string>): Promise<void> {
-    if(!this.token) await this.getToken();
-
+  public async uploadFile(container: string, filePath: string, fileName: string, extraHeaders?: Record<string, string>): Promise<string> {
+    
     const fileStream = createReadStream(filePath);
-    const uploadUrl = `${this.endpoint}/${container}/${fileName}`;
-    const params = this.getRequestConfig(extraHeaders).headers;
-    console.log('uploadUrl',uploadUrl);
-    console.log('params',params);
-
-    try {
-      await axios.put(uploadUrl, fileStream, params);
-      console.log('File uploaded successfully!');
-    } catch (error) {
-      console.error('Error uploading file:', error);
-    }
+    return this.uploadStream(container, fileStream, fileName, extraHeaders);
   }
 
-  public async uploadStream(container: string, stream: ReadStream, fileName: string, extraHeaders?: Record<string, string>): Promise<void> {
-    if(!this.token) await this.getToken();
+  public async uploadStream(container: string, stream: ReadStream, fileName: string, extraHeaders?: Record<string, string>): Promise<string> {
+    
+    return new Promise(async (resolve, reject) => {
+    
+      if(!this.token) await this.getToken();
 
-    const uploadUrl = `${this.endpoint}/${container}/${fileName}`;
+      const uploadUrl = `${this.endpoint}/${container}/${fileName}`;
+      const params = this.getRequestConfig(extraHeaders);
 
-    try {
-      await axios.put(uploadUrl, stream, this.getRequestConfig(extraHeaders));
-      console.log('Stream uploaded successfully!');
-    } catch (error) {
-      console.error('Error uploading stream:', error);
-    }
+      try {
+        await axios.put(uploadUrl, stream, params);
+        resolve(uploadUrl);
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
-
 
   public async deleteFile(container: string, fileName: string): Promise<void> {
-    if(!this.token) await this.getToken();
+    
+    return new Promise(async (resolve, reject) => {
+      if(!this.token) await this.getToken();
 
-    const deleteUrl = `${this.endpoint}/${container}/${fileName}`;
+      const deleteUrl = `${this.endpoint}/${container}/${fileName}`;
 
-    try {
-      await axios.delete(deleteUrl, this.getRequestConfig());
-      console.log('File deleted successfully!');
-    } catch (error) {
-      console.error('Error deleting file:', error);
-    }
+      try {
+        await axios.delete(deleteUrl, this.getRequestConfig());
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 }

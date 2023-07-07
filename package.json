@@ -1,5 +1,5 @@
 {
-  "name": "@wgr/strapi-provider-upload-open-stack",
+  "name": "@wgr-sa/strapi-provider-upload-open-stack",
   "version": "4.11.0",
   "description": "OpenStack provider for strapi upload",
   "keywords": [
@@ -17,7 +17,7 @@
     "build": "tsc",
     "watch": "tsc -w --preserveWatchOutput",
     "clean": "run -T rimraf ./dist",
-    "prepublishOnly": "yarn clean && yarn build",
+    "prepublishOnly": "tsc",
     "test:unit": "run -T jest",
     "test:unit:watch": "run -T jest --watch",
     "lint": "run -T eslint ."

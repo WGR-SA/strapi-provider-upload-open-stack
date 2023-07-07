@@ -65,12 +65,12 @@ module.exports = {
     
           // Perform the upload using openstackStorage.uploadFile
           if (file.stream) {
-            await os.uploadStream(container, file.stream, fileName, extraHeaders);
+            file.url = await os.uploadStream(container, file.stream, fileName, extraHeaders);
           } else if (file.buffer) {
             // If you want to support buffer uploads as well
             // Convert the buffer to a readable stream using `streamifier`
             const stream = createReadStream(file.buffer);
-            await os.uploadStream(container, stream, fileName, extraHeaders);
+            file.url = await os.uploadStream(container, stream, fileName, extraHeaders);
           }
     
           // Resolve the promise if the upload is successful
