@@ -8,8 +8,8 @@
     "OpenStack",
     "strapi"
   ],
-  "main": "./dist/providers/strapi-provider-upload-open-stack/src/index.js",
-  "types": "./dist/providers/strapi-provider-upload-open-stack/src/index.d.ts",
+  "main": "./dist/src/index.js",
+  "types": "./dist/src/index.d.ts",
   "files": [
     "./dist"
   ],
