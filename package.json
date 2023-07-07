@@ -1,0 +1,38 @@
+{
+  "name": "@wgr/strapi-provider-upload-open-stack",
+  "version": "4.11.0",
+  "description": "OpenStack provider for strapi upload",
+  "keywords": [
+    "upload",
+    "open stack",
+    "OpenStack",
+    "strapi"
+  ],
+  "main": "./dist/providers/strapi-provider-upload-open-stack/src/index.js",
+  "types": "./dist/providers/strapi-provider-upload-open-stack/src/index.d.ts",
+  "files": [
+    "./dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w --preserveWatchOutput",
+    "clean": "run -T rimraf ./dist",
+    "prepublishOnly": "yarn clean && yarn build",
+    "test:unit": "run -T jest",
+    "test:unit:watch": "run -T jest --watch",
+    "lint": "run -T eslint ."
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "streamifier": "^0.1.1"
+  },
+  "engines": {
+    "node": ">=14.19.1 <=18.x.x",
+    "npm": ">=6.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.2",
+    "tsconfig": "^7.0.0",
+    "typescript": "^5.1.6"
+  }
+}
