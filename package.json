@@ -1,6 +1,6 @@
 {
   "name": "@wgr-sa/strapi-provider-upload-open-stack",
-  "version": "4.11.2",
+  "version": "4.11.3",
   "description": "OpenStack provider for strapi upload",
   "keywords": [
     "upload",
