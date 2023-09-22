@@ -73,6 +73,7 @@ export class OpenStackStorage {
 
   private getRequestConfig(extraHeaders?: Record<string, string>): AxiosRequestConfig {
     return {
+      maxBodyLength: "Infinity",
       headers: {
         'Date': this.getRFC7231Date(),
         'Content-Type': 'application/octet-stream',
