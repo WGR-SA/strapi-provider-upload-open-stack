@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@strapi/logger": "^4.13.7",
-    "axios": "^0.24.0",
+    "axios": "^0.27.0",
     "streamifier": "^0.1.1"
   },
   "engines": {
