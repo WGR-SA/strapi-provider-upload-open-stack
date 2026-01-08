@@ -89,22 +89,30 @@ export class OpenStackStorage {
     return this.uploadStream(container, fileStream, fileName, extraHeaders);
   }
 
-  public async uploadStream(container: string, stream: ReadStream, fileName: string, extraHeaders?: Record<string, string>): Promise<string> {
-    
-    return new Promise(async (resolve, reject) => {
-    
-      if(!this.token) await this.getToken();
-
-      const uploadUrl = `${this.endpoint}/${container}/${fileName}`;
-      const params = this.getRequestConfig(extraHeaders);
-
-      try {
+  public async uploadStream(
+    container: string,
+    stream: ReadStream,
+    fileName: string,
+    extraHeaders?: Record<string, string>
+  ): Promise<string> {
+  
+    await this.getToken();
+  
+    const uploadUrl = `${this.endpoint}/${container}/${fileName}`;
+    const params = this.getRequestConfig(extraHeaders);
+  
+    try {
+      await axios.put(uploadUrl, stream, params);
+      return uploadUrl;
+    } catch (err: any) {
+      // auto refresh token si expiré 
+      if (err.response?.status === 401) {
+        await this.getToken(); // regen token
         await axios.put(uploadUrl, stream, params);
-        resolve(uploadUrl);
-      } catch (error) {
-        reject(error);
+        return uploadUrl;
       }
-    });
+      throw err;
+    }
   }
 
   public async deleteFile(container: string, fileName: string): Promise<void> {
